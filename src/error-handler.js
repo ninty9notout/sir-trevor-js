@@ -7,7 +7,7 @@ var ErrorHandler = function(wrapper, mediator, container) {
   this.wrapper = wrapper;
   this.mediator = mediator;
   this.el = container;
-  
+
   if (_.isUndefined(this.el)) {
     this._ensureElement();
     this.wrapper.insertBefore(this.el, this.wrapper.firstChild);
@@ -36,7 +36,7 @@ Object.assign(ErrorHandler.prototype, require('./function-bind'), require('./med
   initialize: function() {
     var list = document.createElement("ul");
     var p = document.createElement("p");
-    p.innerHTML = i18n.t("errors:title");
+    p.innerHTML = st.i18n.t("errors:title");
 
     this.el.appendChild(p)
     .appendChild(list);

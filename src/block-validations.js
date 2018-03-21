@@ -40,11 +40,11 @@ module.exports = {
   validations: [],
 
   validateField: function(field) {
-    
+
     var content = field.getAttribute('contenteditable') ? field.textContent : field.value;
 
     if (content.length === 0) {
-      this.setError(field, i18n.t("errors:block_empty",
+      this.setError(field, st.i18n.t("errors:block_empty",
                                  { name: bestNameFromField(field) }));
     }
   },

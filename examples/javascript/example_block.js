@@ -16,7 +16,7 @@ SirTrevor.Blocks.Example = (function(){
     // Function; the title displayed in the toolbar
     // Can return a translated string (if required)
     title: function() {
-      // return i18n.t('blocks:example:title');
+      // return st.i18n.t('blocks:example:title');
       return "Example";
     },
 

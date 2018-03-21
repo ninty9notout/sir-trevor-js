@@ -53,7 +53,7 @@ Object.assign(EditorStore.prototype, {
     } catch(e) {
       this.mediator.trigger(
         'errors:add',
-        { text: i18n.t("errors:load_fail") });
+        { text: st.i18n.t("errors:load_fail") });
 
       this.mediator.trigger('errors:render');
 

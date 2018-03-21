@@ -93,7 +93,7 @@ module.exports = Block.extend({
   },
 
   onTweetFail: function() {
-    this.addMessage(i18n.t("blocks:tweet:fetch_error"));
+    this.addMessage(st.i18n.t("blocks:tweet:fetch_error"));
     this.ready();
   },
 

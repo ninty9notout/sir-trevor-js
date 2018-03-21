@@ -4,13 +4,13 @@ module.exports = () => {
   return `
     <div class="st-block__ui-delete-controls">
       <label class="st-block__delete-label">
-        ${i18n.t('general:delete')}
+        ${st.i18n.t('general:delete')}
       </label>
       <button class='st-block-ui__confirm js-st-block-confirm-delete' type="button">
-        ${i18n.t('general:yes')}
+        ${st.i18n.t('general:yes')}
       </button>
       <button class='st-block-ui__confirm js-st-block-deny-delete' type="button">
-        ${i18n.t('general:no')}
+        ${st.i18n.t('general:no')}
       </button>
     </div>
   `;

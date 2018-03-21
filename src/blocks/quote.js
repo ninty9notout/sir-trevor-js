@@ -13,8 +13,8 @@ var ScribeQuotePlugin = require('./scribe-plugins/scribe-quote-plugin');
 
 var template = _.template([
   '<blockquote class="st-required st-text-block st-text-block--quote" contenteditable="true"></blockquote>',
-  '<label class="st-input-label"> <%= i18n.t("blocks:quote:credit_field") %></label>',
-  '<input maxlength="140" name="cite" placeholder="<%= i18n.t("blocks:quote:credit_field") %>"',
+  '<label class="st-input-label"> <%= st.i18n.t("blocks:quote:credit_field") %></label>',
+  '<input maxlength="140" name="cite" placeholder="<%= st.i18n.t("blocks:quote:credit_field") %>"',
   ' class="st-input-string js-cite-input" type="text" />'
 ].join("\n"));
 

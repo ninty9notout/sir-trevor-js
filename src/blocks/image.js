@@ -6,7 +6,7 @@ var Block = require('../block');
 module.exports = Block.extend({
 
   type: "image",
-  
+
   droppable: true,
   uploadable: true,
 
@@ -38,7 +38,7 @@ module.exports = Block.extend({
           this.ready();
         },
         function(error) {
-          this.addMessage(i18n.t('blocks:image:upload_error'));
+          this.addMessage(st.i18n.t('blocks:image:upload_error'));
           this.ready();
         }
       );

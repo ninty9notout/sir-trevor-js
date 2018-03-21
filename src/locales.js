@@ -60,10 +60,12 @@ var Locales = {
   }
 };
 
-if (window.i18n === undefined) {
+window.st = {};
+
+if (window.i18n === undefined || _.isFunction(i18n.init) === false || _.isFunction(i18n.t) === false) {
   // Minimal i18n stub that only reads the English strings
   utils.log("Using i18n stub");
-  window.i18n = {
+  window.st.i18n = {
     t: function(key, options) {
       var parts = key.split(':'), str, obj, part, i;
 
@@ -94,7 +96,8 @@ if (window.i18n === undefined) {
   utils.log("Using i18next");
   // Only use i18next when the library has been loaded by the user, keeps
   // dependencies slim
-  i18n.init({ resStore: Locales, fallbackLng: config.language,
+  window.st.i18n = window.i18n;
+  window.st.i18n.init({ resStore: Locales, fallbackLng: config.language,
             ns: { namespaces: ['general', 'blocks'], defaultNs: 'general' }
   });
 }

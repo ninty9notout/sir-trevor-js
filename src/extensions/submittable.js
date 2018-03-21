@@ -73,7 +73,7 @@ Object.assign(Submittable.prototype, {
   },
 
   _disableSubmitButton: function(message){
-    this.setSubmitButton(null, message || i18n.t("general:wait"));
+    this.setSubmitButton(null, message || st.i18n.t("general:wait"));
     Array.prototype.forEach.call(this.submitBtns, function(btn, i){
       btn.setAttribute('disabled', 'disabled');
       btn.classList.add('disabled');

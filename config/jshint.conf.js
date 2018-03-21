@@ -37,7 +37,7 @@ module.exports = {
     options: Object.assign({}, jsHintDefaultOptions, {
       jquery: false,
       globals: {
-        i18n: true,
+        st: true,
         webkitURL: true,
       },
     }),
@@ -49,7 +49,7 @@ module.exports = {
       globals: {
         _: true,
         SirTrevor: true,
-        i18n: true,
+        st: true,
         webkitURL: true,
         jasmine: true,
         describe: true,

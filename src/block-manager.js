@@ -237,7 +237,7 @@ Object.assign(BlockManager.prototype, require('./function-bind'), require('./med
       if (this._getBlockTypeCount(type) === 0) {
         utils.log("Failed validation on required block type " + type);
         this.mediator.trigger('errors:add',
-                              { text: i18n.t("errors:type_missing", { type: type }) });
+                              { text: st.i18n.t("errors:type_missing", { type: type }) });
 
       } else {
         var blocks = this.getBlocksByType(type).filter(function(b) {
@@ -247,7 +247,7 @@ Object.assign(BlockManager.prototype, require('./function-bind'), require('./med
         if (blocks.length > 0) { return false; }
 
         this.mediator.trigger('errors:add', {
-          text: i18n.t("errors:required_type_empty", {type: type})
+          text: st.i18n.t("errors:required_type_empty", {type: type})
         });
 
         utils.log("A required block type " + type + " is empty");
