@@ -12,6 +12,7 @@ var _ = require('./lodash');
 var config = require('./config');
 var Dom = require('./packages/dom');
 var Events = require('./packages/events');
+var EventBus = require('./event-bus');
 
 const FORMAT_BUTTON_TEMPLATE = require("./templates/format-button");
 
@@ -126,6 +127,8 @@ Object.assign(FormatBar.prototype, require('./function-bind'), require('./mediat
     this.block.execTextBlockCommand(cmd);
 
     this.highlightSelectedButtons();
+
+    EventBus.trigger("content:edited", this.block);
 
     // Re-select the contenteditable field.
     document.activeElement.focus();

@@ -51,7 +51,7 @@ Object.assign(BlockManager.prototype, require('./function-bind'), require('./med
 
   initialize: function() {},
 
-  createBlock: function(type, data, previousSibling, options) {
+  createBlock: function(type, data, previousSibling, options, silent) {
     type = utils.classify(type);
 
     // Run validations
@@ -71,6 +71,10 @@ Object.assign(BlockManager.prototype, require('./function-bind'), require('./med
     this.triggerBlockCountUpdate();
     this.mediator.trigger('block:limitReached', this.blockLimitReached());
 
+    // Don't trigger events if silent (see bottom of removeBlock)
+    if (silent) { return; }
+
+    EventBus.trigger("content:edited", block);
     EventBus.trigger(data ? "block:create:existing" : "block:create:new", block);
     utils.log("Block created of type " + type);
   },
@@ -130,6 +134,13 @@ Object.assign(BlockManager.prototype, require('./function-bind'), require('./med
     this.triggerBlockCountUpdate();
     this.mediator.trigger('block:limitReached', this.blockLimitReached());
 
+    // Silenty create the default block if we somehow end
+    // up with an empty editor
+    if (this.blocks.length === 0) {
+      this.createBlock(this.options.defaultType || 'Text', null, null, {autoFocus: true}, true);
+    }
+
+    EventBus.trigger('content:edited', block);
     EventBus.trigger('block:remove', blockID);
   },
 

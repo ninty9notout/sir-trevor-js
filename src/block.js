@@ -258,6 +258,7 @@ Object.assign(Block.prototype, SimpleBlock.fn, require('./block-validations'), {
 
   onDeleteConfirm: function(e) {
     e.preventDefault();
+    this.mediator.trigger('content:edited', this);
     this.mediator.trigger('block:remove', this.blockID, {focusOnPrevious: true});
   },
 
@@ -369,6 +370,10 @@ Object.assign(Block.prototype, SimpleBlock.fn, require('./block-validations'), {
           ev.preventDefault();
           block.execTextBlockCommand(cmd.cmd);
         }
+      });
+
+      Events.delegate(block.el, '.st-text-block,textarea,input', 'keyup', function (ev) {
+        EventBus.trigger('content:edited', block);
       });
     });
   },

@@ -45,6 +45,7 @@ var ScribeListBlockPlugin = function(block) {
         ev.preventDefault();
 
         if (block.isLastListItem()) {
+          block.mediator.trigger('content:edited', block);
           block.mediator.trigger('block:remove', block.blockID);
         } else {
           content = scribe.getContent();

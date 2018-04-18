@@ -153,6 +153,7 @@ var ScribeTextBlockPlugin = function(block) {
       if (ev.keyCode === 8 && isAtStart) {
         ev.preventDefault();
 
+        block.mediator.trigger('content:edited', block);
         block.mediator.trigger('block:remove', block.blockID, {
           transposeContent: true
         });

@@ -137,6 +137,7 @@ Object.assign(Editor.prototype, require('./function-bind'), require('./events'),
 
     // Destroy all blocks
     this.blockManager.blocks.forEach(function(block) {
+      this.mediator.trigger('content:edited', block);
       this.mediator.trigger('block:remove', block.blockID);
     }, this);
 

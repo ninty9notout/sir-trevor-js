@@ -18405,7 +18405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  initialize: function initialize() {},
 
-	  createBlock: function createBlock(type, data, previousSibling, options) {
+	  createBlock: function createBlock(type, data, previousSibling, options, silent) {
 	    type = utils.classify(type);
 
 	    // Run validations
@@ -18426,6 +18426,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.triggerBlockCountUpdate();
 	    this.mediator.trigger('block:limitReached', this.blockLimitReached());
 
+	    // Don't trigger events if silent (see bottom of removeBlock)
+	    if (silent) {
+	      return;
+	    }
+
+	    EventBus.trigger("content:edited", block);
 	    EventBus.trigger(data ? "block:create:existing" : "block:create:new", block);
 	    utils.log("Block created of type " + type);
 	  },
@@ -18486,6 +18492,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.triggerBlockCountUpdate();
 	    this.mediator.trigger('block:limitReached', this.blockLimitReached());
 
+	    // Silenty create the default block if we somehow end
+	    // up with an empty editor
+	    if (this.blocks.length === 0) {
+	      this.createBlock(this.options.defaultType || 'Text', null, null, { autoFocus: true }, true);
+	    }
+
+	    EventBus.trigger('content:edited', block);
 	    EventBus.trigger('block:remove', blockID);
 	  },
 
@@ -19036,6 +19049,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  onDeleteConfirm: function onDeleteConfirm(e) {
 	    e.preventDefault();
+	    this.mediator.trigger('content:edited', this);
 	    this.mediator.trigger('block:remove', this.blockID, { focusOnPrevious: true });
 	  },
 
@@ -19146,6 +19160,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          ev.preventDefault();
 	          block.execTextBlockCommand(cmd.cmd);
 	        }
+	      });
+
+	      Events.delegate(block.el, '.st-text-block,textarea,input', 'keyup', function (ev) {
+	        EventBus.trigger('content:edited', block);
 	      });
 	    });
 	  },
@@ -20126,6 +20144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (ev.keyCode === 8 && isAtStart) {
 	        ev.preventDefault();
 
+	        block.mediator.trigger('content:edited', block);
 	        block.mediator.trigger('block:remove', block.blockID, {
 	          transposeContent: true
 	        });
@@ -20717,6 +20736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ev.preventDefault();
 
 	        if (block.isLastListItem()) {
+	          block.mediator.trigger('content:edited', block);
 	          block.mediator.trigger('block:remove', block.blockID);
 	        } else {
 	          content = scribe.getContent();
@@ -20960,6 +20980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var config = __webpack_require__(69);
 	var Dom = __webpack_require__(70);
 	var Events = __webpack_require__(132);
+	var EventBus = __webpack_require__(76);
 
 	var FORMAT_BUTTON_TEMPLATE = __webpack_require__(271);
 
@@ -21076,6 +21097,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.block.execTextBlockCommand(cmd);
 
 	    this.highlightSelectedButtons();
+
+	    EventBus.trigger("content:edited", this.block);
 
 	    // Re-select the contenteditable field.
 	    document.activeElement.focus();
@@ -21251,6 +21274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // Destroy all blocks
 	    this.blockManager.blocks.forEach(function (block) {
+	      this.mediator.trigger('content:edited', block);
 	      this.mediator.trigger('block:remove', block.blockID);
 	    }, this);
 
